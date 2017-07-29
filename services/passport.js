@@ -23,18 +23,15 @@ passport.use(
 			callbackURL: '/auth/spotify/callback',
 			proxy: true
 		},
-		(accessToken, refreshToken, profile, done) => {
-			User.findOne({ spotifyID: profile.id }).then(existingUser => {
-				if (existingUser) {
-					//  We already have a user. Don't make a new one.
-					done(null, existingUser);
-				} else {
-					// Create a new user
-					new User({ spotifyID: profile.id })
-						.save()
-						.then(user => done(null, user));
-				}
-			});
+		async (accessToken, refreshToken, profile, done) => {
+			const existingUser = await User.findOne({ spotifyID: profile.id });
+
+			if (existingUser) {
+				return done(null, existingUser);
+			}
+
+			const user = await new User({ spotifyID: profile.id }).save();
+			done(null, user);
 		}
 	)
 );
