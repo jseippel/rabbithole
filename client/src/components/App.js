@@ -5,12 +5,13 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import Search from './Search';
+import Playback from './Playback';
 
 class App extends Component {
 	componentDidMount() {
 		this.props.fetchUser();
+		this.props.saveTokens();
 	}
 
 	render() {
@@ -20,8 +21,8 @@ class App extends Component {
 					<div>
 						<Header />
 						<Route exact path="/" component={Landing} />
-						<Route exact path="/surveys" component={Dashboard} />
-						<Route path="/surveys/new" component={SurveyNew} />
+						<Route exact path="/search" component={Search} />
+						<Route path="/play" component={Playback} />
 					</div>
 				</BrowserRouter>
 			</div>

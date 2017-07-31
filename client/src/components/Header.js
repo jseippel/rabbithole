@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 class Header extends Component {
 	renderContent() {
-		// console.log('props: ' + this.props);
-		switch (this.props.auth) {
+		console.log(this.props);
+		switch (this.props.auth.user) {
 			case null:
 				return;
-			case false:
+			case '':
 				return (
 					<li>
 						<a href="/auth/spotify">Log in with Spotify</a>
@@ -23,15 +23,14 @@ class Header extends Component {
 		}
 	}
 	render() {
-		console.log(this.props);
 		return (
 			<nav>
 				<div className="nav-wrapper">
 					<Link
-						to={this.props.auth ? '/surveys' : '/'}
+						to={this.props.auth ? '/search' : '/'}
 						className="left brand-logo"
 					>
-						Rabbithole
+						RabbitHole
 					</Link>
 					<ul className="right">
 						{this.renderContent()}

@@ -25,12 +25,18 @@ passport.use(
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			const existingUser = await User.findOne({ spotifyID: profile.id });
-
 			if (existingUser) {
+				existingUser.access_token = accessToken;
+				existingUser.refresh_token = refreshToken;
+				existingUser.save();
 				return done(null, existingUser);
 			}
 
-			const user = await new User({ spotifyID: profile.id }).save();
+			const user = await new User({
+				spotifyID: profile.id,
+				access_token: accessToken,
+				refresh_token: refreshToken
+			}).save();
 			done(null, user);
 		}
 	)

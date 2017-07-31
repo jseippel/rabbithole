@@ -1,9 +1,21 @@
-import { FETCH_USER } from '../actions/types';
+import { FETCH_USER, SAVE_TOKENS } from '../actions/types';
 
-export default function(state = null, action) {
+const INITIAL_STATE = {
+	user: '',
+	accessToken: '',
+	refreshToken: ''
+};
+
+export default function(state = INITIAL_STATE, action) {
 	switch (action.type) {
 		case FETCH_USER:
-			return action.payload || false;
+			return { ...state, user: action.payload };
+		case SAVE_TOKENS:
+			return {
+				...state,
+				accessToken: action.payload.accessToken,
+				refreshToken: action.payload.refreshToken
+			};
 		default:
 			return state;
 	}

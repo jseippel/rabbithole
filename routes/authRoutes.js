@@ -12,12 +12,16 @@ module.exports = app => {
 		'/auth/spotify/callback',
 		passport.authenticate('spotify'),
 		(req, res) => {
-			res.redirect('/surveys');
+			res.cookie('access_token', req.user.access_token);
+			res.cookie('refresh_token', req.user.refresh_token);
+			res.redirect('/search');
 		}
 	);
 
 	app.get('/api/logout', (req, res) => {
 		req.logout();
+		res.clearCookie('access_token');
+		res.clearCookie('refresh_token');
 		res.redirect('/');
 	});
 
