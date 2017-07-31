@@ -11,7 +11,7 @@ class Landing extends Component {
 					randomly picked related artists.
 				</h2>
 				<a
-					href={this.props.auth ? '/search' : '/auth/spotify'}
+					href={this.props.auth == '' ? '/auth/spotify' : '/search'}
 					className="waves-effect waves-light btn"
 				>
 					See how deep it goes...
